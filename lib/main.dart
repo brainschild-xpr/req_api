@@ -17,7 +17,7 @@ class _MainState extends State<Main> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('BCXPR API'),
+          title: Text('BCXPR API Admin'),
         ),
         body: Root(),
       ),
