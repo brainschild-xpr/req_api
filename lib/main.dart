@@ -17,7 +17,7 @@ class _MainState extends State<Main> {
     return MaterialApp(
       theme: ThemeData(
         // Define the default brightness and colors.
-        brightness: Brightness.dark,
+        brightness: Brightness.light,
         primaryColor: Colors.amber,
         accentColor: Colors.cyan[600],
 
