@@ -31,38 +31,75 @@ class UserList extends StatelessWidget {
     return ListView.builder(
       itemCount: user.length,
       itemBuilder: (context, index) {
-        return Card(
-          child: Container(
-            padding: EdgeInsets.all(20),
-            color: Colors.pinkAccent,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  user[index].firstName,
-                  style: buildTextStyle(),
-                ),
-                Text(
-                  user[index].lastname,
-                  style: buildTextStyle(),
-                ),
-                Text(
-                  user[index].username,
-                  style: buildTextStyle(),
-                ),
-                Text(
-                  user[index].email,
-                  style: buildTextStyle(),
-                ),
-                Text(
-                  user[index].userId,
-                  style: buildTextStyle(),
-                ),
-                Text(
-                  '+254' + user[index].phone.toString(),
-                  style: buildTextStyle(),
-                )
-              ],
+        return Container(
+          padding: EdgeInsets.only(top: 10, left: 10,right: 10),
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            child: Container(
+              padding: EdgeInsets.all(15),
+              color: Colors.teal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        user[index].firstName,
+                        style: buildTextStyle(),
+                      ),
+                      Text(
+                        user[index].lastname,
+                        style: buildTextStyle(),
+                      ),
+                      Text(
+                        user[index].username,
+                        style: buildTextStyle(),
+                      ),
+                      Text(
+                        user[index].email,
+                        style: buildTextStyle(),
+                      ),
+                      Text(
+                        user[index].userId,
+                        style: buildTextStyle(),
+                      ),
+                      Text(
+                        '+254' + user[index].phone.toString(),
+                        style: buildTextStyle(),
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          MaterialButton(
+                            child: Text(
+                              'Edit',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            color: Colors.green,
+                            onPressed: () {},
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          MaterialButton(
+                            child: Text(
+                              'Delete',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            color: Colors.red,
+                            onPressed: () {},
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         );
