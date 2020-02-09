@@ -34,14 +34,34 @@ class UserList extends StatelessWidget {
         return Card(
           child: Container(
             padding: EdgeInsets.all(20),
-            color: Colors.amber,
+            color: Colors.pinkAccent,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(user[index].firstName),
-                Text(user[index].lastname),
-                Text(user[index].email),
-                Text(user[index].userId),
-                Text(user[index].phone.toString())
+                Text(
+                  user[index].firstName,
+                  style: buildTextStyle(),
+                ),
+                Text(
+                  user[index].lastname,
+                  style: buildTextStyle(),
+                ),
+                Text(
+                  user[index].username,
+                  style: buildTextStyle(),
+                ),
+                Text(
+                  user[index].email,
+                  style: buildTextStyle(),
+                ),
+                Text(
+                  user[index].userId,
+                  style: buildTextStyle(),
+                ),
+                Text(
+                  '+254' + user[index].phone.toString(),
+                  style: buildTextStyle(),
+                )
               ],
             ),
           ),
@@ -49,19 +69,22 @@ class UserList extends StatelessWidget {
       },
     );
   }
+
+  TextStyle buildTextStyle() {
+    return TextStyle(
+      color: Colors.white,
+      fontSize: 20,
+    );
+  }
 }
 
 Future<List<User>> fetchUsers(http.Client client) async {
   final response = await client.get('http://192.168.43.94:7000/test');
-  print(response.body);
-
   return compute(parseUser, response.body);
 }
 
 // A function that converts a response body into a List<Photo>.
 List<User> parseUser(String responseBody) {
   final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
-  print(parsed);
-
   return parsed.map<User>((json) => User.fromJson(json)).toList();
 }
