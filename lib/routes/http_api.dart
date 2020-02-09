@@ -2,38 +2,34 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:req_api/model.class/photo.class.dart';
+import 'package:req_api/model.class/user.class.dart';
 
 class HttpApi extends StatelessWidget {
   const HttpApi({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Photo>>(
+    return FutureBuilder<List<User>>(
       future: fetchUsers(http.Client()),
       builder: (context, snapshot) {
         if (snapshot.hasError) print(snapshot.error);
-
         return snapshot.hasData
-            ? PhotosList(photos: snapshot.data)
+            ? UserList(user: snapshot.data)
             : Center(child: CircularProgressIndicator());
       },
     );
   }
 }
 
-class PhotosList extends StatelessWidget {
-  final List<Photo> photos;
+class UserList extends StatelessWidget {
+  final List<User> user;
 
-  PhotosList({Key key, this.photos}) : super(key: key);
+  UserList({Key key, this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      //   crossAxisCount: 2,
-      // ),
-      itemCount: photos.length,
+      itemCount: user.length,
       itemBuilder: (context, index) {
         return Card(
           child: Container(
@@ -41,12 +37,11 @@ class PhotosList extends StatelessWidget {
             color: Colors.amber,
             child: Column(
               children: <Widget>[
-                // Image.network(photos[index].thumbnailUrl),
-                Text(photos[index].firstName),
-                Text(photos[index].lastname),
-                Text(photos[index].email),
-                Text(photos[index].userId),
-                Text(photos[index].phone.toString())
+                Text(user[index].firstName),
+                Text(user[index].lastname),
+                Text(user[index].email),
+                Text(user[index].userId),
+                Text(user[index].phone.toString())
               ],
             ),
           ),
@@ -56,21 +51,17 @@ class PhotosList extends StatelessWidget {
   }
 }
 
-Future<List<Photo>> fetchUsers(http.Client client) async {
+Future<List<User>> fetchUsers(http.Client client) async {
   final response = await client.get('http://192.168.43.94:7000/test');
   print(response.body);
 
-  return compute(parsePhotos, response.body);
+  return compute(parseUser, response.body);
 }
 
 // A function that converts a response body into a List<Photo>.
-List<Photo> parsePhotos(String responseBody) {
+List<User> parseUser(String responseBody) {
   final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
   print(parsed);
 
-  return parsed.map<Photo>((json) => Photo.fromJson(json)).toList();
+  return parsed.map<User>((json) => User.fromJson(json)).toList();
 }
-
-// Future<http.Response> fetchPhotos(http.Client client) async {
-//   return client.get('https://jsonplaceholder.typicode.com/photos');
-// }
